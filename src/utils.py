@@ -6,7 +6,7 @@ from nerfstudio.data.scene_box import SceneBox
 
 
 def load_state_dict(model, state_dict):
-    """ """
+    """   """
     is_ddp_model_state = True
     model_state = {}
     for key, value in state_dict.items():
@@ -26,16 +26,19 @@ def load_state_dict(model, state_dict):
     return model
 
 
-def get_model(device="cuda"):
+def get_model(model_path, config_path, device="cuda"):
     """ This loads a pre trained model from the path specified in the config file
     
     Args:
+        model_path (str): The path to the model
+        config_path (str): The path to the config file
         device (str, optional): The device to use. Defaults to "cuda".
     Returns:
         NerfactoModel: The model loaded from the path specified in the config file
     """
     
-    config_path = Path("/home/programmer/master_project_experiments/22_11_2023/2023-11-22_093943/config.yml")
+    #config_path = Path("/home/programmer/master_project_experiments/22_11_2023/2023-11-22_093943/config.yml")
+    config_path = Path(config_path)
     config = yaml.load(config_path.read_text(), Loader=yaml.Loader)
     aabb_scale = config.pipeline.datamanager.dataparser.scene_scale
     scene_box = SceneBox(
@@ -46,8 +49,8 @@ def get_model(device="cuda"):
     model_config=NerfactoModelConfig()
     print("Loading model")
     model = NerfactoModel(config=model_config, scene_box= scene_box, num_train_data=794).to(device)
-    load_path  = "/home/programmer/master_project_experiments/22_11_2023/2023-11-22_093943/nerfstudio_models/step-000029999.ckpt"
-    loaded_state = torch.load(load_path, map_location="cpu")
+    
+    loaded_state = torch.load(model_path, map_location="cpu")
     model.update_to_step(loaded_state["step"])
     model = load_state_dict(model, loaded_state["pipeline"])
     return model
