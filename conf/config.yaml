@@ -1,0 +1,4 @@
+config_path: "/home/programmer/master_project_experiments/22_11_2023/2023-11-22_093943/config.yml"
+model_path: "/home/programmer/master_project_experiments/22_11_2023/2023-11-22_093943/nerfstudio_models/step-000029999.ckpt"
+height: 512
+width: 512
