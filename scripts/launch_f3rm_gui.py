@@ -164,7 +164,7 @@ def create_sim_image(sim_data):
 @hydra.main(config_path="../conf", config_name="config_f3rm")
 def main(cfg: omegaconf.dictconfig.DictConfig) -> None:
     """ """
-    debug_info = False
+    debug_info = True
     start_time = time.time()  # Capture the start time
     colormap = cm.get_cmap('hot')  # You can change 'hot' to any colormap you li
     logging.basicConfig(level=logging.INFO)
